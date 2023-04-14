@@ -110,11 +110,11 @@ def main():
 
     file_contents = file_handler.process_files(input_directory)
     
-    print("Files were processed successfully.\nSending request to the API...")
-    api_request(file_contents=file_contents, format=format)
+    print("Files were processed successfully.")
+    response_message = api_request(file_contents=file_contents, format=format, level=level)
    
     #message_post(input_directory, level, sections, format)
-    response_message = api_request(file_contents=file_contents, format=format)
+    
     # Print the response message
     print(f"ChatGPT response: {response_message}")
 

@@ -38,11 +38,11 @@ def process_files(input_directory):
             print(f"Reading file: {filename}")
             # 
             if filename.endswith(".py"):
-                file_contents += minifiers.minify_python(filepath)
+                file_contents += minifiers.minify_python(filepath) + "\n"
             elif filename.endswith(".java"):
                 file_contents += minifiers.minify_java(filepath)
     encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
-    result = encoding.encode(process_files(file_contents))
+    result = encoding.encode(file_contents)
     another_result = encoding.encode(read_files(input_directory))
     print("minified " + str(len(result)) + " tokens")
     print("unminified " + str(len(another_result)) + " tokens")
@@ -57,5 +57,3 @@ def save_to_file(document, file_name, document_type):
         f.write(document)
     f.close()
     print(f"File saved to C:\\Users\\Janea\\Desktop\\{name_format}")
-
-
