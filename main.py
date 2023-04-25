@@ -11,7 +11,7 @@ from tenacity import (
     wait_random_exponential,
 )  # for exponential backoff
 
-openai.api_key = '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'
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='DocBot: Generate documentation from Java or Python source code')
@@ -26,6 +26,7 @@ def parse_arguments():
 def level_of_detail(level):
     # TODO - add more levels of detail and explanation of what GPT should do
     if level == 'high-level':
+        high_level = "write a brief overview of technical documentation for a source code, ensuring that it is easy to read and understand. The documentation should cover essential aspects such as getting started, architectural design, usage guides"
         return 'high-level'
     elif level == 'intermediate':
         intermed = """write detailed technical documentation for a source code based on the following guidelines:Use active voice, simple sentences, and proper formatting for easy reading.Develop a clear, task-oriented Getting Started section.
