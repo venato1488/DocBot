@@ -4,7 +4,6 @@ import argparse
 import openai
 import time
 import file_handler
-#import tiktoken
 from tenacity import (
     retry,
     stop_after_attempt,
@@ -16,7 +15,7 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 def parse_arguments():
     parser = argparse.ArgumentParser(description='DocBot: Generate documentation from Java or Python source code')
     parser.add_argument('input_directory', help='Path to the directory containing Java or Python source code')
-    parser.add_argument('-l', '--level', choices=['high-level', 'intermediate', 'detailed'], default='intermediate', help='Level of detail for the generated documentation')
+    parser.add_argument('-l', '--level', choices=['high-level', 'intermediate'], default='intermediate', help='Level of detail for the generated documentation')
     #parser.add_argument('-s', '--sections', nargs='+', default=['classes', 'methods'], help='Sections or information to include in the generated documentation')
     parser.add_argument('-f', '--format', choices=['markdown', 'html'], default='markdown', help='Format of the generated documentation')
 
@@ -40,8 +39,6 @@ In-production usage guides with best practices and troubleshooting tips
 Real-world use cases, illustrating how the software can be applied in various scenarios
 References to external resources, libraries, and tools used in the project"""
         return intermed
-    elif level == 'detailed':
-        return 'detailed'
 
 
 def message_post(input_directory,level, sections, format):
@@ -58,16 +55,9 @@ def message_post(input_directory,level, sections, format):
         {"role": "user", "content": f"{file_contents} you must encode your response in the {format} format."}
     ] 
 )
-    ##response_message = request['choices'][0]['message']['content'] # type: ignore
-    # Print the response message
-    #print(f"ChatGPT response: {response_message}")
-
-    #file_handler.save_to_file(response_message)
-
 
 # TODO - total amount of tokens before sending the request to the API
 # TODO - to split code into chunks and send them to the API
-# TODO - use pyminifier for making python code smaller prior to sending it to the API
 # TODO - conversation mode, maybe to adjust some parameters or redo documentation
 
 
